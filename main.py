@@ -48,9 +48,19 @@ def draw_tiles(tiles):
       set_number(tiles[column][row].value, row, column)
 
 def move_tiles(line):
-  for i, tile in enumerate(line):
-    for j in range((i + 1), len(line)):
-      if tile(i) <= tile(j):
+  print(line)
+  print(range(len(line)))
+  print(line(1))
+  for i in range(len(line)):
+    print(line(i))
+    x = line(i).value
+    # for j in range((i + 1), len(line)):
+    #   y = line(j).value
+    #   print(f"x:{x}")
+    #   print(f"y:{y}")
+      # if x <= y:
+      #   if x. == 0:
+      #     tile(i)
 
 
 # 操作系
