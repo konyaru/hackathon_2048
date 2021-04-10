@@ -73,26 +73,20 @@ def move_tiles(key_input):
       copy_line = tmp_line.copy()
       copy_line.reverse()
       calc(copy_line)
-  
-
-  
   draw_tiles()
     
 
 def calc(line):
-    for i in range(len(line) - 1):
-      for j in range((i + 1), len(line)):
-        if line[j].value != 0:
-          if line[i].value == 0:
-            line[i].value = line[j].value
-            line[j].value = 0
-          elif line[i].value == line[j].value:
-            (line[i].value, line[j].value) = (line[i].value*2, 0)
-          else:
-            break
-            
-              
-            
+  for i in range(len(line) - 1):
+    for j in range((i + 1), len(line)):
+      if line[j].value != 0:
+        if line[i].value == 0:
+          line[i].value = line[j].value
+          line[j].value = 0
+        elif line[i].value == line[j].value:
+          (line[i].value, line[j].value) = (line[i].value*2, 0)
+        else:
+          break
 
 # 操作系
 def operate(event):
