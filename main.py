@@ -74,7 +74,6 @@ def move_tiles(key_input):
       copy_line.reverse()
       calc(copy_line)
   
-  tiles.
 
   
   draw_tiles()
