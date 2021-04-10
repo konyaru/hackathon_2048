@@ -2,9 +2,11 @@ import tkinter as tk
 import math
 import random
 import itertools
+from time import sleep
 
 root = None
 canvas = None
+tiles = []
 
 SQUARE_LENGTH = 100
 RADIUS = SQUARE_LENGTH / 2 - 5
@@ -42,34 +44,62 @@ def set_number(num, x, y):
   canvas.create_rectangle(center_x - SQUARE_LENGTH / 2, center_y - SQUARE_LENGTH / 2, center_x + SQUARE_LENGTH / 2, center_y + SQUARE_LENGTH / 2, fill=CELL_COLOR, width=0)
   canvas.create_text(center_x, center_y, text=num, justify="center", font=("", 70), tag="count_text")
 
-def draw_tiles(tiles):
+def draw_tiles():
   for column in range(len(tiles)):
     for row in range(len(tiles[column])):
       set_number(tiles[column][row].value, row, column)
 
-def move_tiles(line):
-  print(line)
-  print(range(len(line)))
-  print(line(1))
-  for i in range(len(line)):
-    print(line(i))
-    x = line(i).value
-    # for j in range((i + 1), len(line)):
-    #   y = line(j).value
-    #   print(f"x:{x}")
-    #   print(f"y:{y}")
-      # if x <= y:
-      #   if x. == 0:
-      #     tile(i)
-
-
-# 操作系
-def operate(event, tiles):
-  print(event.keysym)
-  key_input = event.keysym
+def move_tiles(key_input):
+  global tiles
   if key_input == 'Left':
     for line in tiles:
-      move_tiles(line)
+      calc(line)
+  if key_input == 'Right':
+    for line in tiles:
+      copy_line = line.copy()
+      copy_line.reverse()
+      calc(copy_line)
+  if key_input == 'Up':
+    for i in range(SIZE):
+      tmp_line = []
+      for j in range(SIZE):
+        tmp_line.append(tiles[j][i])
+      calc(tmp_line)
+  if key_input == 'Down':
+    for i in range(SIZE):
+      tmp_line = []
+      for j in range(SIZE):
+        tmp_line.append(tiles[j][i])
+      copy_line = tmp_line.copy()
+      copy_line.reverse()
+      calc(copy_line)
+  
+  tiles.
+
+  
+  draw_tiles()
+    
+
+def calc(line):
+    for i in range(len(line) - 1):
+      for j in range((i + 1), len(line)):
+        if line[j].value != 0:
+          if line[i].value == 0:
+            line[i].value = line[j].value
+            line[j].value = 0
+          elif line[i].value == line[j].value:
+            (line[i].value, line[j].value) = (line[i].value*2, 0)
+          else:
+            break
+            
+              
+            
+
+# 操作系
+def operate(event):
+  print(event.keysym)
+  key_input = event.keysym
+  move_tiles(key_input)
 
 def reset():
   process()
@@ -102,12 +132,21 @@ def initialize():
   set_field()
 
 def process():
+  global tiles
   game = Game()
   tiles = game.tiles
-  draw_tiles(tiles)
+  for i, v in enumerate([0, 2, 4, 2]):
+    tiles[0][i].value = v
+  for i, v in enumerate([0, 2, 2, 2]):
+    tiles[1][i].value = v
+  for i, v in enumerate([0, 4, 2, 2]):
+    tiles[2][i].value = v
+  for i, v in enumerate([2, 2, 2, 2]):
+    tiles[3][i].value = v
+  draw_tiles()
   # set_number("2", 0, 2)
   # set_number("4", 2, 1)
-  root.bind("<Key>", lambda event: operate(event, tiles))
+  root.bind("<Key>", lambda event: operate(event))
   root.bind("<Control-Return>", lambda event: reset())
   root.mainloop()
 
